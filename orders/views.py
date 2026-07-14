@@ -4,6 +4,7 @@ from accounts.models import User
 from .models import Category, Table, Order, OrderItem, MenuItem
 import json
 from django.contrib import messages 
+from . import signals
 @role_required([User.ROLE_CHOICES.WAITER])
 def tables_view(request):
     tables = Table.objects.all()

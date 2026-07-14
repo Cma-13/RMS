@@ -53,3 +53,15 @@ class OrderItem(models.Model):
     
     def __str__(self):
         return f"{self.menu_item} X {self.quantity}"
+    
+    
+class OrderHistory(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='histories')
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(choices=Order.ORDER_STATUS)
+    
+    class Meta:
+        verbose_name_plural = 'Order Histories'
+    def __str__(self):
+        return f"{self.order} -> {self.status}"
+    
