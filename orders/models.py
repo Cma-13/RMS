@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 
 class Table(models.Model):
     name = models.CharField(max_length=20)
@@ -27,3 +27,23 @@ class MenuItem(models.Model):
     
     def __str__(self):
         return self.name
+
+
+class Order(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    table = models.ForeignKey(Table, on_delete=models.PROTECT, related_name='orders')
+    
+    created_at =  models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.table} -> {self.created_at}"
+    
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items')
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.PROTECT, related_name='order_items')
+    price = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(default=1)
+
+    
+    def __str__(self):
+        return f"{self.menu_item} -> {self.quantity}"

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+<body class="bg-gray-100">
+
+<div class="max-w-7xl mx-auto p-6">
+
+    <h1 class="text-3xl font-bold mb-6">
+        Restaurant Menu
+    </h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- MENU -->
+        <div class="lg:col-span-2 bg-white rounded-xl shadow p-5">
+
+            {% for category in categories %}
+
+            <div class="mb-8">
+
+                <h2 class="text-xl font-bold border-b pb-2 mb-4">
+                    {{ category }}
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-3">
+
+                    {% for item in category.items.all %}
+
+                    <div
+                        class="menu-item cursor-pointer border rounded-lg p-4 hover:bg-orange-100 hover:border-orange-400 transition"
+                        data-id="{{ item.id }}"
+                        data-name="{{ item.name }}"
+                        data-price="{{ item.price }}"
+                    >
+
+                        <div class="flex justify-between items-center">
+
+                            <span class="font-medium">
+                                {{ item.name }}
+                            </span>
+
+                            <span class="font-bold text-orange-600">
+                                Rs. {{ item.price }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- ORDER PANEL -->
+        <form class="bg-white rounded-xl shadow p-5 sticky top-5 h-fit" method='post'>
+            {% csrf_token %}
+
+            <h2 class="text-2xl font-bold mb-4">
+                Current Order
+            </h2>
+
+            <div id="selected-menu-items" class="space-y-3">
+
+                <p class="text-gray-400">
+                    No items selected
+                </p>
+
+            </div>
+
+            <hr class="my-5">
+
+            <div class="flex justify-between text-xl font-bold">
+
+                <span>Total</span>
+
+                <span id="total-price">
+                    Rs. 0
+                </span>
+
+            </div>
+<input id="order-items" type="hidden" name="order-items" value="" >
+            <button id = 'place-order-btn'
+                class="mt-6 w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold"
+            >
+                Place Order
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const menuItems = document.querySelectorAll(".menu-item");
+const selectedItemsContainer = document.getElementById("selected-menu-items");
+const totalPriceDisplay = document.getElementById("total-price");
+
+const order = {};
+
+function renderOrder(){
+
+    selectedItemsContainer.innerHTML = "";
+
+    let total = 0;
+
+    let hasItems = false;
+
+    for(const id in order){
+
+        hasItems = true;
+
+        const item = order[id];
+
+        total += item.price * item.quantity;
+
+        selectedItemsContainer.innerHTML += `
+            <div class="border rounded-lg p-3 flex justify-between items-center">
+
+                <div>
+
+                    <h4 class="font-semibold">${item.name}</h4>
+
+                    <p class="text-sm text-gray-500">
+                        Rs. ${item.price} × ${item.quantity}
+                    </p>
+
+                </div>
+
+                <div class="flex items-center gap-2">
+
+                    <button
+                        onclick="decreaseQuantity(${id})"
+                        class="w-8 h-8 rounded bg-gray-200"
+                    >
+                        -
+                    </button>
+
+                    <span class="font-bold">
+                        ${item.quantity}
+                    </span>
+
+                    <button
+                        onclick="increaseQuantity(${id})"
+                        class="w-8 h-8 rounded bg-orange-500 text-white"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+    }
+
+    if(!hasItems){
+        selectedItemsContainer.innerHTML =
+        `<p class="text-gray-400">No items selected</p>`;
+    }
+
+    totalPriceDisplay.innerText = `Rs. ${total}`;
+}
+
+menuItems.forEach(item=>{
+
+    item.addEventListener("click",()=>{
+
+        const id = item.dataset.id;
+
+        const name = item.dataset.name;
+
+        const price = Number(item.dataset.price);
+
+        if(order[id]){
+
+            order[id].quantity++;
+
+        }
+
+        else{
+
+            order[id] = {
+                id,
+                name,
+                price,
+                quantity:1
+            }
+
+        }
+
+        renderOrder();
+
+    });
+
+});
+
+function increaseQuantity(id){
+
+    order[id].quantity++;
+
+    renderOrder();
+
+}
+
+function decreaseQuantity(id){
+
+    order[id].quantity--;
+
+    if(order[id].quantity<=0){
+
+        delete order[id];
+
+    }
+
+    renderOrder();
+}
+
+    document.getElementById("place-order-btn").addEventListener("click",()=> {
+        const orderData = {
+            table_id : "{{table_id}}",
+            items: Object.values(order).map(item => ({
+                item_id : item.id,
+                quantity : item.quantity
+            }))
+
+           
+        }
+      //    console.log(orderData)
+ //   console.log(JSON.stringify(orderData))
+document.getElementById("order-items").value = JSON.stringify(orderData)
+    })
+
+   
+
+
+
+</script>
+
+</body>
+</html>
