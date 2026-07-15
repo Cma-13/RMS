@@ -8,8 +8,11 @@ class TableAdmin(admin.ModelAdmin):
 
     
 
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ['name', 'default_priority']
+
 admin.site.register(Category)
-admin.site.register(MenuItem)
 admin.site.register(OrderItem)
 admin.site.register(OrderHistory)
 

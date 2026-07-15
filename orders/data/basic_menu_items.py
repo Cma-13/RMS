@@ -3,12 +3,14 @@ RESTAURANT_MENU_ITEMS = {
         {
             "name": "Sel Roti",
             "price": 80,
-            "description": "Traditional homemade rice doughnut"
+            "description": "Traditional homemade rice doughnut",
+            "priority": 3
         },
         {
             "name": "Chiura with Yogurt",
             "price": 150,
-            "description": "Beaten rice served with fresh curd"
+            "description": "Beaten rice served with fresh curd",
+            "priority": 2
         }
     ],
 
@@ -16,17 +18,20 @@ RESTAURANT_MENU_ITEMS = {
         {
             "name": "Chicken Momo",
             "price": 180,
-            "description": "Steamed chicken dumplings"
+            "description": "Steamed chicken dumplings",
+            "priority": 3
         },
         {
             "name": "Buff Momo",
             "price": 170,
-            "description": "Steamed buffalo dumplings"
+            "description": "Steamed buffalo dumplings",
+            "priority": 2
         },
         {
             "name": "Choila",
             "price": 280,
-            "description": "Spicy grilled buffalo meat"
+            "description": "Spicy grilled buffalo meat",
+            "priority": 2
         }
     ],
 
@@ -34,12 +39,14 @@ RESTAURANT_MENU_ITEMS = {
         {
             "name": "Dal Bhat Tarkari",
             "price": 350,
-            "description": "Rice, lentils, vegetables, pickle, and salad"
+            "description": "Rice, lentils, vegetables, pickle, and salad",
+            "priority": 3
         },
         {
             "name": "Chicken Thali",
             "price": 450,
-            "description": "Traditional Nepali meal with chicken curry"
+            "description": "Traditional Nepali meal with chicken curry",
+            "priority": 2
         }
     ],
 
@@ -47,12 +54,14 @@ RESTAURANT_MENU_ITEMS = {
         {
             "name": "Mutton Thali",
             "price": 550,
-            "description": "Traditional Nepali meal with mutton curry"
+            "description": "Traditional Nepali meal with mutton curry",
+            "priority": 3
         },
         {
             "name": "Veg Thali",
             "price": 320,
-            "description": "Rice, lentils, vegetables, and pickle"
+            "description": "Rice, lentils, vegetables, and pickle",
+            "priority": 2
         }
     ],
 
@@ -61,27 +70,32 @@ RESTAURANT_MENU_ITEMS = {
             {
                 "name": "Milk Tea",
                 "price": 40,
-                "description": "Traditional Nepali milk tea"
+                "description": "Traditional Nepali milk tea",
+                "priority": 3
             },
             {
                 "name": "Black Tea",
                 "price": 30,
-                "description": "Fresh black tea"
+                "description": "Fresh black tea",
+                "priority": 2
             },
             {
                 "name": "Masala Tea",
                 "price": 50,
-                "description": "Spiced milk tea"
+                "description": "Spiced milk tea",
+                "priority": 3
             },
             {
                 "name": "Coffee",
                 "price": 80,
-                "description": "Freshly brewed coffee"
+                "description": "Freshly brewed coffee",
+                "priority": 3
             },
             {
                 "name": "Hot Lemon",
                 "price": 60,
-                "description": "Warm lemon drink"
+                "description": "Warm lemon drink",
+                "priority": 1
             }
         ],
 
@@ -89,27 +103,32 @@ RESTAURANT_MENU_ITEMS = {
             {
                 "name": "Lassi",
                 "price": 120,
-                "description": "Sweet yogurt drink"
+                "description": "Sweet yogurt drink",
+                "priority": 3
             },
             {
                 "name": "Fresh Lemon Soda",
                 "price": 100,
-                "description": "Refreshing lemon soda"
+                "description": "Refreshing lemon soda",
+                "priority": 2
             },
             {
                 "name": "Cold Coffee",
                 "price": 150,
-                "description": "Chilled coffee with milk"
+                "description": "Chilled coffee with milk",
+                "priority": 2
             },
             {
                 "name": "Soft Drink",
                 "price": 70,
-                "description": "Coke, Fanta, Sprite, etc."
+                "description": "Coke, Fanta, Sprite, etc.",
+                "priority": 3
             },
             {
                 "name": "Mineral Water",
                 "price": 30,
-                "description": "500ml bottled water"
+                "description": "500ml bottled water",
+                "priority": 1
             }
         ],
 
@@ -117,17 +136,20 @@ RESTAURANT_MENU_ITEMS = {
             {
                 "name": "Tongba",
                 "price": 350,
-                "description": "Traditional fermented millet drink"
+                "description": "Traditional fermented millet drink",
+                "priority": 3
             },
             {
                 "name": "Chhyang",
                 "price": 180,
-                "description": "Traditional fermented rice drink"
+                "description": "Traditional fermented rice drink",
+                "priority": 2
             },
             {
                 "name": "Aila",
                 "price": 250,
-                "description": "Traditional Newari distilled liquor"
+                "description": "Traditional Newari distilled liquor",
+                "priority": 2
             }
         ]
     },
@@ -136,12 +158,14 @@ RESTAURANT_MENU_ITEMS = {
         {
             "name": "Juju Dhau",
             "price": 120,
-            "description": "King curd from Bhaktapur"
+            "description": "King curd from Bhaktapur",
+            "priority": 3
         },
         {
             "name": "Kheer",
             "price": 100,
-            "description": "Traditional rice pudding"
+            "description": "Traditional rice pudding",
+            "priority": 2
         }
     ]
 }
