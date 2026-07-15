@@ -17,7 +17,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
  
-class KITCHEN_STATION(models.Model):
+class KitchenStation(models.Model):
+    code = models.CharField(max_length=50)
     name = models.CharField(max_length=150)
     
     
@@ -37,7 +38,7 @@ class MenuItem(models.Model):
     description = models.TextField(null = True, blank = True)  
     default_priority = models.CharField(choices=PRIORITY_CHOICES, default=PRIORITY_CHOICES.MEDIUM, max_length=2)
     est_time = models.PositiveIntegerField(help_text="Write estimated preparation time in minutes", null=True, blank=True)
-    station = models.ForeignKey(KITCHEN_STATION, on_delete=models.SET_NULL, null=True)
+    station = models.ForeignKey(KitchenStation, on_delete=models.SET_NULL, null=True, related_name='items')
     
     def __str__(self):
         return self.name
@@ -74,7 +75,7 @@ class OrderItem(models.Model):
 
     
     def __str__(self):
-        return f"{self.menu_item} X {self.quantity}"
+        return f"{self.menu_item} X {self.quantity} qtys"
     
     
 class OrderHistory(models.Model):

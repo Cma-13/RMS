@@ -1,171 +1,165 @@
-RESTAURANT_MENU_ITEMS = {
-    "Breakfast": [
-        {
-            "name": "Sel Roti",
-            "price": 80,
-            "description": "Traditional homemade rice doughnut",
-            "priority": 3
-        },
-        {
-            "name": "Chiura with Yogurt",
-            "price": 150,
-            "description": "Beaten rice served with fresh curd",
-            "priority": 2
-        }
-    ],
+KITCHEN_STATIONS = {
+    "steam": {
+        "name": "Steam Station",
+        "description": "Momo steaming and dumpling preparation",
+    },
+    "grill": {
+        "name": "Grill Station",
+        "description": "Sekuwa, Choila, Sukuti and grilled items",
+    },
+    "main_kitchen": {
+        "name": "Main Kitchen",
+        "description": "Dal Bhat, Thakali, Dhido and curry dishes",
+    },
+    "breakfast": {
+        "name": "Breakfast Station",
+        "description": "Breakfast and morning specials",
+    },
+    "beverage": {
+        "name": "Beverage Station",
+        "description": "Tea, coffee and cold drinks",
+    },
+    "dessert": {
+        "name": "Dessert Station",
+        "description": "Desserts and sweets",
+    },
+}
 
-    "Snacks": [
+RESTAURANT_MENU_ITEMS = {
+    "snacks": [
         {
-            "name": "Chicken Momo",
+            "name": "Momo (Buff)",
             "price": 180,
-            "description": "Steamed chicken dumplings",
-            "priority": 3
+            "priority": 3,
+            "est_time": 15,
+            "station": "steam",
         },
         {
-            "name": "Buff Momo",
-            "price": 170,
-            "description": "Steamed buffalo dumplings",
-            "priority": 2
+            "name": "Momo (Chicken)",
+            "price": 200,
+            "priority": 3,
+            "est_time": 15,
+            "station": "steam",
+        },
+        {
+            "name": "Momo (Veg)",
+            "price": 160,
+            "priority": 2,
+            "est_time": 12,
+            "station": "steam",
+        },
+        {
+            "name": "Chatamari",
+            "price": 150,
+            "priority": 2,
+            "est_time": 10,
+            "station": "grill",
+        },
+        {
+            "name": "Sekuwa",
+            "price": 250,
+            "priority": 3,
+            "est_time": 18,
+            "station": "grill",
         },
         {
             "name": "Choila",
-            "price": 280,
-            "description": "Spicy grilled buffalo meat",
-            "priority": 2
-        }
-    ],
-
-    "Lunch": [
-        {
-            "name": "Dal Bhat Tarkari",
-            "price": 350,
-            "description": "Rice, lentils, vegetables, pickle, and salad",
-            "priority": 3
+            "price": 220,
+            "priority": 3,
+            "est_time": 12,
+            "station": "grill",
         },
         {
-            "name": "Chicken Thali",
-            "price": 450,
-            "description": "Traditional Nepali meal with chicken curry",
-            "priority": 2
-        }
-    ],
-
-    "Dinner": [
-        {
-            "name": "Mutton Thali",
-            "price": 550,
-            "description": "Traditional Nepali meal with mutton curry",
-            "priority": 3
+            "name": "Aloo Tama",
+            "price": 140,
+            "priority": 1,
+            "est_time": 8,
+            "station": "main_kitchen",
         },
         {
-            "name": "Veg Thali",
-            "price": 320,
-            "description": "Rice, lentils, vegetables, and pickle",
-            "priority": 2
-        }
-    ],
-
-    "Drinks": {
-        "Hot": [
-            {
-                "name": "Milk Tea",
-                "price": 40,
-                "description": "Traditional Nepali milk tea",
-                "priority": 3
-            },
-            {
-                "name": "Black Tea",
-                "price": 30,
-                "description": "Fresh black tea",
-                "priority": 2
-            },
-            {
-                "name": "Masala Tea",
-                "price": 50,
-                "description": "Spiced milk tea",
-                "priority": 3
-            },
-            {
-                "name": "Coffee",
-                "price": 80,
-                "description": "Freshly brewed coffee",
-                "priority": 3
-            },
-            {
-                "name": "Hot Lemon",
-                "price": 60,
-                "description": "Warm lemon drink",
-                "priority": 1
-            }
-        ],
-
-        "Cold": [
-            {
-                "name": "Lassi",
-                "price": 120,
-                "description": "Sweet yogurt drink",
-                "priority": 3
-            },
-            {
-                "name": "Fresh Lemon Soda",
-                "price": 100,
-                "description": "Refreshing lemon soda",
-                "priority": 2
-            },
-            {
-                "name": "Cold Coffee",
-                "price": 150,
-                "description": "Chilled coffee with milk",
-                "priority": 2
-            },
-            {
-                "name": "Soft Drink",
-                "price": 70,
-                "description": "Coke, Fanta, Sprite, etc.",
-                "priority": 3
-            },
-            {
-                "name": "Mineral Water",
-                "price": 30,
-                "description": "500ml bottled water",
-                "priority": 1
-            }
-        ],
-
-        "Traditional": [
-            {
-                "name": "Tongba",
-                "price": 350,
-                "description": "Traditional fermented millet drink",
-                "priority": 3
-            },
-            {
-                "name": "Chhyang",
-                "price": 180,
-                "description": "Traditional fermented rice drink",
-                "priority": 2
-            },
-            {
-                "name": "Aila",
-                "price": 250,
-                "description": "Traditional Newari distilled liquor",
-                "priority": 2
-            }
-        ]
-    },
-
-    "Desserts": [
-        {
-            "name": "Juju Dhau",
+            "name": "Wai Wai Sadeko",
             "price": 120,
-            "description": "King curd from Bhaktapur",
-            "priority": 3
+            "priority": 1,
+            "est_time": 5,
+            "station": "main_kitchen",
+        },
+    ],
+
+    "breakfast": [
+        {
+            "name": "Sel Roti with Aloo Tarkari",
+            "price": 180,
+            "priority": 3,
+            "est_time": 15,
+            "station": "breakfast",
         },
         {
-            "name": "Kheer",
-            "price": 100,
-            "description": "Traditional rice pudding",
-            "priority": 2
-        }
-    ]
+            "name": "Chiura with Tarkari",
+            "price": 160,
+            "priority": 2,
+            "est_time": 10,
+            "station": "breakfast",
+        },
+        {
+            "name": "Anda Paratha",
+            "price": 150,
+            "priority": 2,
+            "est_time": 12,
+            "station": "breakfast",
+        },
+        {
+            "name": "Puri Tarkari",
+            "price": 140,
+            "priority": 1,
+            "est_time": 10,
+            "station": "breakfast",
+        },
+        {
+            "name": "Jeri Swari",
+            "price": 130,
+            "priority": 1,
+            "est_time": 5,
+            "station": "breakfast",
+        },
+    ],
+
+    "lunch": [
+        {
+            "name": "Dal Bhat Tarkari (Veg)",
+            "price": 280,
+            "priority": 3,
+            "est_time": 15,
+            "station": "main_kitchen",
+        },
+        {
+            "name": "Dal Bhat Tarkari (Chicken)",
+            "price": 380,
+            "priority": 3,
+            "est_time": 20,
+            "station": "main_kitchen",
+        },
+        {
+            "name": "Dal Bhat Tarkari (Mutton)",
+            "price": 500,
+            "priority": 2,
+            "est_time": 25,
+            "station": "main_kitchen",
+        },
+        {
+            "name": "Thakali Khana Set",
+            "price": 450,
+            "priority": 3,
+            "est_time": 20,
+            "station": "main_kitchen",
+        },
+        {
+            "name": "Gundruk Dhido Set",
+            "price": 350,
+            "priority": 2,
+            "est_time": 18,
+            "station": "main_kitchen",
+        },
+    ],
+
+    
 }

@@ -1,17 +1,39 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from orders.data.basic_menu_items import RESTAURANT_MENU_ITEMS
-from orders.models import Category, MenuItem
+from orders.data.basic_menu_items import (
+    KITCHEN_STATIONS,
+    RESTAURANT_MENU_ITEMS,
+)
+from orders.models import (
+    Category,
+    MenuItem,
+    KitchenStation,
+)
 
 
 class Command(BaseCommand):
-    help = "Populate categories and menu items"
+    help = "Populate kitchen stations, categories and menu items"
 
     @transaction.atomic
     def handle(self, *args, **options):
+        stations_created = 0
         categories_created = 0
         items_created = 0
+
+        # ------------------------------------------------------------------
+        # Create Kitchen Stations
+        # ------------------------------------------------------------------
+        for code, station_data in KITCHEN_STATIONS.items():
+            _, created = KitchenStation.objects.get_or_create(
+                code=code,
+                defaults={
+                    "name": station_data["name"],
+                },
+            )
+
+            if created:
+                stations_created += 1
 
         # ------------------------------------------------------------------
         # Create Categories & Menu Items
@@ -35,13 +57,18 @@ class Command(BaseCommand):
                         categories_created += 1
 
                     for item in sub_items:
+                        station = KitchenStation.objects.get(
+                            code=item["station"]
+                        )
+
                         _, created = MenuItem.objects.get_or_create(
                             category=category,
                             name=item["name"],
                             defaults={
                                 "price": item["price"],
-                                "description": item["description"],
-                                "default_priority": item.get("priority", 2),
+                                "default_priority": item["priority"],
+                                "est_time": item["est_time"],
+                                "station": station,
                             },
                         )
 
@@ -57,13 +84,18 @@ class Command(BaseCommand):
                     categories_created += 1
 
                 for item in items:
+                    station = KitchenStation.objects.get(
+                        code=item["station"]
+                    )
+
                     _, created = MenuItem.objects.get_or_create(
                         category=category,
                         name=item["name"],
                         defaults={
                             "price": item["price"],
-                            "description": item["description"],
-                            "default_priority": item.get("priority", 2),
+                            "default_priority": item["priority"],
+                            "est_time": item["est_time"],
+                            "station": station,
                         },
                     )
 
@@ -75,8 +107,9 @@ class Command(BaseCommand):
                 f"""
 Seeding completed successfully.
 
-Categories Created: {categories_created}
-Menu Items Created: {items_created}
+Kitchen Stations Created: {stations_created}
+Categories Created:       {categories_created}
+Menu Items Created:       {items_created}
                 """.strip()
             )
         )
