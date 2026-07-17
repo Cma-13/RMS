@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .decorators import role_required
 from accounts.models import User
 from .models import Category, Table, Order, OrderItem, MenuItem, KitchenStation
 import json
 from django.contrib import messages 
 from . import signals
+from django.urls import reverse
+from urllib.parse import urlencode
+
 @role_required([User.ROLE_CHOICES.WAITER])
 def tables_view(request):
     tables = Table.objects.all()
@@ -55,8 +58,16 @@ def menu_view(request, table_id):
 @role_required([User.ROLE_CHOICES.KITCHEN])
 def kitchen_dashboard_view(request):
      
-    # stations = KitchenStation.objects.all()
-    orderitems = OrderItem.objects.all().order_by("-priority")
+    station_code = request.GET.get('station_code')
+    request.session['station_code'] = station_code
+    print(request.session['station_code'])
+    if station_code is not None:
+        orderitems =  OrderItem.objects.filter(menu_item__station__code=station_code)
+    else:
+        orderitems = OrderItem.objects.all()
+            
+    orderitems = orderitems.order_by("-priority")
+
     grouped_items = {}
     
     for item in orderitems:
@@ -72,3 +83,28 @@ def kitchen_dashboard_view(request):
         # 'stations': stations
         'order_items': grouped_items
     })
+    
+    
+@role_required([User.ROLE_CHOICES.KITCHEN])
+def kitchen_item_view(request,pk):
+    
+    if request.method == 'POST':
+        item_id = request.POST.get('order_id')
+        status = request.POST.get('status')
+        item = get_object_or_404(OrderItem, pk=item_id)
+        item.status = OrderItem.ITEM_STATUS.READY
+        item.save()
+        # return redirect('kitchen_item_view_url', pk=item_id)
+        station_code = request.session['station_code']
+        url = reverse('kitchen_dashboard_view_url')
+        params = {
+            'station_code': station_code
+        }
+        del request.session['station_code']
+        return redirect(f"{url}?{urlencode(params)}")
+        
+    orderitem = OrderItem.objects.get(pk=pk)
+    return render(request, 'orders/kitchen_item.html',{
+        'order_item': orderitem
+    })
+        
