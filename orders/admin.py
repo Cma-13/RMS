@@ -17,10 +17,15 @@ class MenuItemAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['table','status', 'created_at'] 
     
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ['order', 'status']
+    list_filter = ['order__table']
+    list_editable = ['status']
+    
     
 
     
 admin.site.register(Category)
-admin.site.register(OrderItem)
 admin.site.register(OrderHistory)
 admin.site.register(KitchenStation) 
