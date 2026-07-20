@@ -29,6 +29,9 @@ def menu_view(request, table_id):
         table_obj = Table.objects.get(pk=table_id)
         order = Order.objects.create(table=table_obj)
         
+        if len(data_dict.get("items")) == 0:
+            messages.warning(request,"Order is empty. Please add items to the order.")
+            return redirect("tables_view_url")
         
         for orderitem in data_dict.get("items"):
             menu_item = MenuItem.objects.get(pk=orderitem.get("item_id"))
@@ -145,3 +148,22 @@ def tables_status_live(request):
         
     })
         
+        
+@role_required([User.ROLE_CHOICES.WAITER])
+def served_confirmation(request,order_item_id):
+    
+    if request.method == 'POST':
+        item_id = request.POST.get('order_id')
+        if item_id is not None:
+            order_item = get_object_or_404(OrderItem, pk=order_item_id)
+            order_item.status = OrderItem.ITEM_STATUS.SERVED
+            order_item.save()
+            return redirect("menu_view_url", table_id=order_item.order.table.id)
+            
+            
+        
+    
+    order_item = get_object_or_404(OrderItem, pk=order_item_id)
+    return render(request, 'orders/served-confirmation.html',{
+        'order_item': order_item
+    })
