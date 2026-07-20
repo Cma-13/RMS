@@ -10,4 +10,7 @@ urlpatterns = [
     path("kitchen/item/<pk>/", views.kitchen_item_view, name="kitchen_item_view_url"),
     
     path("order/<order_item_id>/served-confirmation/", views.served_confirmation, name="served_confirmation_url"),
+    
+    path("billing/tables/", views.tables_for_billing, name="tables_for_billing_url"),
+    path("billing/tables/live/", views.billing_tables_status_live, name="billing_tables_status_live_url"),
 ]
